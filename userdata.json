@@ -1,0 +1,95 @@
+{
+    "PPPP": {
+        "Easy": {
+            "highScore": 0,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Normal": {
+            "highScore": 0,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Hard": {
+            "highScore": 949620,
+            "fullCombo": 0,
+            "perfect": 0
+        }
+    },
+    "IRIS OUT": {
+        "Easy": {
+            "highScore": 0,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Normal": {
+            "highScore": 0,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Hard": {
+            "highScore": 0,
+            "fullCombo": 0,
+            "perfect": 0
+        }
+    },
+    "잔혹한 천사의 테제": {
+        "Easy": {
+            "highScore": 0,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Normal": {
+            "highScore": 931360,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Hard": {
+            "highScore": 959219,
+            "fullCombo": 0,
+            "perfect": 0
+        }
+    },
+    "Flower Rocket": {
+        "Easy": {
+            "highScore": 954308,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Normal": {
+            "highScore": 902806,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Hard": {
+            "highScore": 615400,
+            "fullCombo": 0,
+            "perfect": 0
+        }
+    },
+    "염라": {
+        "Easy": {
+            "highScore": 995444,
+            "fullCombo": 1,
+            "perfect": 0
+        },
+        "Normal": {
+            "highScore": 0,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Hard": {
+            "highScore": 982296,
+            "fullCombo": 1,
+            "perfect": 0
+        }
+    },
+    "Settings": {
+        "lobbyMusicVol": 1,
+        "lobbySfxVol": 1,
+        "ingameMusicVol": 1,
+        "ingameSfxVol": 0,
+        "offset": 0,
+        "noteSpeed": 0.8
+    }
+}

@@ -1,0 +1,231 @@
+import pygame
+import time
+import shared
+from images import *
+from update import *
+from mouse import *
+
+def DrawImage2D(image, layer, x, y):
+    shared.layers.append((image, layer, x - image.get_width() / 2 + 960, 540 - y - image.get_height() / 2))
+
+transition2 = 0
+
+class SongSection:
+    def __init__(self):
+        import pygame.freetype
+        import json
+        self.x = -200
+        self.onCursor = None
+        self.titleFont = pygame.freetype.Font("font/Pretendard-SemiBold.ttf", 60)
+        self.highScoreFont = pygame.freetype.Font("font/Pretendard-Medium.ttf", 32)
+        self.highScoreVFont = pygame.freetype.Font("font/Pretendard-Medium.ttf", 48)
+        self.infoFont = pygame.freetype.Font("font/Pretendard-Medium.ttf", 24)
+        self.difficultyFont = pygame.freetype.Font("font/Pretendard-Medium.ttf", 20)
+        self.difficultyVFont = pygame.freetype.Font("font/Pretendard-Medium.ttf", 48)
+
+    def Update(self):
+        global transition2
+        self.x += (0 - self.x) * 0.2
+        click = False
+        if transition2 == 0:
+            for event in shared.events:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click = True
+        mousePos = MousePos()
+        songName = shared.songList[shared.curSongIdx]
+        DrawImage2D(images['UI']['SongSection'], 0, -448.375 + self.x, 0)
+        DrawImage2D(images[songName]['Album'], 0, -262.5 + self.x, -4)
+        DrawImage2D(self.titleFont.render(songName, (255, 255, 255), None)[0], 0, -446.25 + self.x, 322.5)
+        DrawImage2D(self.highScoreFont.render('HIGH SCORE', (179, 179, 179), None)[0], 0, -710 + self.x, 160)
+        DrawImage2D(self.highScoreVFont.render(f'{shared.userData[songName][shared.difficulty]['highScore']:,}', (255, 255, 255), None)[0], 0, -710 + self.x, 115)
+        if shared.userData[songName][shared.difficulty]['perfect']:
+            DrawImage2D(images['UI']['BadgePerfect'], 0, -840 + self.x, 119)
+            DrawImage2D(images['UI']['BadgePerfect'], 0, -580 + self.x, 119)
+        elif shared.userData[songName][shared.difficulty]['fullCombo']:
+            DrawImage2D(images['UI']['BadgeFullCombo'], 0, -840 + self.x, 119)
+            DrawImage2D(images['UI']['BadgeFullCombo'], 0, -580 + self.x, 119)
+        DrawImage2D(self.infoFont.render('Music by', (179, 179, 179), None)[0], 0, -710 + self.x, -75)
+        DrawImage2D(self.infoFont.render(shared.songInfo[songName]['Music by'], (179, 179, 179), None)[0], 0, -710 + self.x, -105)
+        DrawImage2D(self.infoFont.render('Level by', (179, 179, 179), None)[0], 0, -710 + self.x, -150)
+        DrawImage2D(self.infoFont.render(shared.songInfo[songName]['Level by'], (179, 179, 179), None)[0], 0, -710 + self.x, -180)
+        if (-710 + self.x - mousePos[0])**2 + (20 - mousePos[1])**2 < 2500:
+            DrawImage2D(images['UI']['PlayBtnOn'], 0, -710 + self.x, 20)
+            if click:
+                transition2 = time.perf_counter()
+        else:
+            DrawImage2D(images['UI']['PlayBtnOff'], 0, -710 + self.x, 20)
+        
+        rect = images['UI']['DifficultyBtnOff'].get_rect(center = (-607.5 + self.x, -327)).inflate(-45,0)
+        if rect.collidepoint(mousePos):
+            self.onCursor = 'EasyBtn'
+            if click:
+                shared.difficulty = 'Easy'
+        rect = images['UI']['DifficultyBtnOff'].get_rect(center = (-427.5 + self.x, -327)).inflate(-45,0)
+        if rect.collidepoint(mousePos):
+            self.onCursor = 'NormalBtn'
+            if click:
+                shared.difficulty = 'Normal'
+        rect = images['UI']['DifficultyBtnOff'].get_rect(center = (-247.5 + self.x, -327)).inflate(-45,0)
+        if rect.collidepoint(mousePos):
+            self.onCursor = 'HardBtn'
+            if click:
+                shared.difficulty = 'Hard'
+        
+        if self.onCursor == 'EasyBtn' or shared.difficulty == 'Easy':
+            DrawImage2D(images['UI']['DifficultyBtnOn'], 0, -607.5 + self.x, -327)
+        else:
+            DrawImage2D(images['UI']['DifficultyBtnOff'], 0, -607.5 + self.x, -327)
+        DrawImage2D(self.difficultyFont.render('EASY', (179, 179, 179), None)[0], 0, -607.5 + self.x, -300)
+        DrawImage2D(self.difficultyVFont.render(f'{shared.songDifficulty[songName]['Easy']}', (179, 179, 179), None)[0], 0, -607.5 + self.x, -335)
+
+        if self.onCursor == 'NormalBtn' or shared.difficulty == 'Normal':
+            DrawImage2D(images['UI']['DifficultyBtnOn'], 0, -427.5 + self.x, -327)
+        else:
+            DrawImage2D(images['UI']['DifficultyBtnOff'], 0, -427.5 + self.x, -327)
+        DrawImage2D(self.difficultyFont.render('NORMAL', (179, 179, 179), None)[0], 0, -427.5 + self.x, -300)
+        DrawImage2D(self.difficultyVFont.render(f'{shared.songDifficulty[songName]['Normal']}', (179, 179, 179), None)[0], 0, -427.5 + self.x, -335)
+
+        if self.onCursor == 'HardBtn' or shared.difficulty == 'Hard':
+            DrawImage2D(images['UI']['DifficultyBtnOn'], 0, -247.5 + self.x, -327)
+        else:
+            DrawImage2D(images['UI']['DifficultyBtnOff'], 0, -247.5 + self.x, -327)
+        DrawImage2D(self.difficultyFont.render('HARD', (179, 179, 179), None)[0], 0, -247.5 + self.x, -300)
+        DrawImage2D(self.difficultyVFont.render(f'{shared.songDifficulty[songName]['Hard']}', (179, 179, 179), None)[0], 0, -247.5 + self.x, -335)
+
+class SelectionBox:
+    scroll = 0
+    pos = ((225, 450), (150, 300), (75, 150), (0, 0), (75, -150), (150, -300), (225, -450))
+
+    def __init__(self, posIdx, songName): # posIdx 1부터 시작
+        import pygame.freetype
+        self.posIdx = posIdx
+        self.surface = images[songName]['SelectionBox'].copy()
+        font = pygame.freetype.Font("font/Pretendard-Medium.ttf", 32).render(songName, (255, 255, 255), None)[0]
+        self.surface.blit(font, (50, self.surface.get_height() / 2 - font.get_height() / 2))
+        self.alpha = 255
+
+        relative = self.posIdx - SelectionBox.scroll
+        if relative < 0:
+            relative = 0
+        if relative > 6:
+            relative = 6
+        if abs(relative - 3) > 2:
+            self.alpha = 0
+            self.surface.set_alpha(0)
+
+        self.x = 540 + SelectionBox.pos[relative][0]
+        self.y = 0 + SelectionBox.pos[relative][1]
+
+    def Update(self):
+        relative = self.posIdx - SelectionBox.scroll
+        if relative < 0:
+            relative = 0
+        if relative > 6:
+            relative = 6
+
+        self.x += (540 + SelectionBox.pos[relative][0] - self.x) * 0.2
+        self.y += (0 + SelectionBox.pos[relative][1] - self.y) * 0.2
+        
+        if abs(relative - 3) > 2:
+            self.alpha += (0 - self.alpha) * 0.2
+        else:
+            self.alpha += (255 - self.alpha) * 0.2
+
+        self.surface.set_alpha(self.alpha)
+        DrawImage2D(self.surface, 0, self.x, self.y)
+
+
+def Lobby():
+    global transition2
+    transition2 = 0
+    prevPressedKeys = pygame.key.get_pressed()
+    songName = shared.songList[shared.curSongIdx]
+    songSection = SongSection()
+    selectionBoxes = []
+    offset = shared.curSongIdx
+    SelectionBox.scroll = 0
+    for i in range(5):
+        selectionBoxes.append(SelectionBox(i + 1, shared.songList[(i + offset - 2) % len(shared.songList)]))
+    songVol = 1
+    songChanged = True
+    songStartTime = 0
+    fade = pygame.Surface((shared.BASE_WIDTH, shared.BASE_HEIGHT), pygame.SRCALPHA)
+    transition = time.perf_counter()
+
+    while shared.scene == 'Lobby':
+        shared.events = pygame.event.get()
+        for event in shared.events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+        wheelScroll = 0
+        for event in shared.events:
+            if event.type == pygame.MOUSEWHEEL:
+                wheelScroll = event.y
+        if transition2 == 0:
+            if pygame.key.get_pressed()[pygame.K_UP] and not prevPressedKeys[pygame.K_UP] or wheelScroll == 1:
+                fadingBox = next((box for box in selectionBoxes if box.posIdx == SelectionBox.scroll), None)
+                if fadingBox == None or fadingBox.alpha <= 10:
+                    selectionBoxes.append(SelectionBox(SelectionBox.scroll, shared.songList[(offset + SelectionBox.scroll - 3) % len(shared.songList)]))
+                SelectionBox.scroll -= 1
+                songSection.x = -200
+                songChanged = True
+            elif pygame.key.get_pressed()[pygame.K_DOWN] and not prevPressedKeys[pygame.K_DOWN] or wheelScroll == -1:
+                fadingBox = next((box for box in selectionBoxes if box.posIdx == SelectionBox.scroll + 6), None)
+                if fadingBox == None or fadingBox.alpha <= 10:
+                    selectionBoxes.append(SelectionBox(SelectionBox.scroll + 6, shared.songList[(offset + SelectionBox.scroll + 3) % len(shared.songList)]))
+                SelectionBox.scroll += 1
+                songSection.x = -200
+                songChanged = True
+            shared.curSongIdx = (offset + SelectionBox.scroll) % len(shared.songList)
+        
+        if songChanged:
+            shared.songFiles[songName + ' Preview'].stop()
+        
+        songName = shared.songList[shared.curSongIdx]
+        DrawImage2D(images[songName]['Background'], 10, 0, 0)
+
+        if songChanged:
+            songChanged = False
+            songVol = 0
+            shared.songFiles[songName + ' Preview'].play()
+            songStartTime = time.perf_counter()
+
+        if time.perf_counter() - songStartTime < shared.songFiles[songName + ' Preview'].get_length() - 2:
+            songVol += 1 / 50
+        else:
+            songVol -= 1 / 50
+        if songVol > 1:
+            songVol = 1
+        if songVol < 0:
+            songVol = 0
+            songChanged = True
+        shared.songFiles[songName + ' Preview'].set_volume(songVol * shared.settings.lobbyMusicVol)
+
+        songSection.onCursor = None
+        songSection.Update()
+        for box in selectionBoxes:
+            box.Update()
+        selectionBoxes = [box for box in selectionBoxes if box.alpha > 10]
+
+        rect = images['UI']['SettingsBtnOff'].get_rect(center = (870, 502.5))
+        if rect.collidepoint(MousePos()):
+            DrawImage2D(images['UI']['SettingsBtnOn'], 0, 870, 502.5)
+        else:
+            DrawImage2D(images['UI']['SettingsBtnOff'], 0, 870, 502.5)
+
+        prevPressedKeys = pygame.key.get_pressed()
+
+        if time.perf_counter() - transition <= 1:
+            fade.fill((255, 255, 255, 255 * (1 - (time.perf_counter() - transition))))
+            DrawImage2D(fade, 0, 0, 0)
+        if time.perf_counter() - transition2 <= 1.5:
+            fade.fill((255, 255, 255, (255 * (time.perf_counter() - transition2)) if time.perf_counter() - transition2 <= 1 else 255))
+            DrawImage2D(fade, 0, 0, 0)
+        if 1.5 <= time.perf_counter() - transition2 < 2:
+            shared.scene = 'Ingame'
+
+        Update()
+
+    shared.songFiles[songName + ' Preview'].stop()
