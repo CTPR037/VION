@@ -15,6 +15,7 @@ images = {
         'NextBtnOff' : pygame.image.load('images/NextBtnOff.png').convert_alpha(),
         'BadgeFullCombo' : pygame.image.load('images/BadgeFullCombo.png').convert_alpha(),
         'BadgePerfect' : pygame.image.load('images/BadgePerfect.png').convert_alpha(),
+        'SettingsBox' : pygame.image.load('images/SettingsBox.png').convert_alpha(),
     },
     'PPPP' : {
         'Album' : pygame.image.load('images/PPPP_Album.png').convert_alpha(),
@@ -45,6 +46,12 @@ images = {
         'SelectionBox' : pygame.image.load('images/Karma_SelectionBox.png').convert_alpha(),
         'BGA' : 'bga/Karma_BGA.mp4',
     },
+    'danser' : {
+        'Album' : pygame.image.load('images/danser_Album.png').convert_alpha(),
+        'Background' : pygame.image.load('images/danser_Background.png').convert(),
+        'SelectionBox' : pygame.image.load('images/danser_SelectionBox.png').convert_alpha(),
+        'BGA' : 'bga/danser_BGA.mp4',
+    },
 }
 
 colors = {
@@ -70,6 +77,13 @@ colors = {
         'FlickNote' : (255, 240, 180),
     },
     'PPPP' : {
+        'PlayArea' : (100, 100, 100, 127),
+        'CheckLine' : (200, 200, 200),
+        'TapNote' : (180, 240, 255),
+        'HoldNote' : (180, 240, 255, 127),
+        'FlickNote' : (255, 240, 180),
+    },
+    'danser' : {
         'PlayArea' : (100, 100, 100, 127),
         'CheckLine' : (200, 200, 200),
         'TapNote' : (180, 240, 255),

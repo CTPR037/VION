@@ -84,6 +84,23 @@
             "perfect": 0
         }
     },
+    "danser": {
+        "Easy": {
+            "highScore": 0,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Normal": {
+            "highScore": 0,
+            "fullCombo": 0,
+            "perfect": 0
+        },
+        "Hard": {
+            "highScore": 758777,
+            "fullCombo": 0,
+            "perfect": 0
+        }
+    },
     "Settings": {
         "lobbyMusicVol": 1,
         "lobbySfxVol": 1,

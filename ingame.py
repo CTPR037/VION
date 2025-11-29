@@ -490,8 +490,8 @@ def Ingame():
                     bgaSurface = pygame.image.frombuffer(data, (w, h), "RGB")
                     frame, val = bga.get_frame()
             if bgaSurface is not None:
-                shared.layers.append((bgaSurface, 1, 0, 0))
-        shared.layers.append((dark, 1, 0, 0))
+                DrawImage(bgaSurface, 0, 0, 1, 0, 1)
+        DrawImage(dark, 0, 0, 1, 0, 1)
         playArea.Update()
 
         if timer >= shared.settings.noteSpeed and not songPlay:

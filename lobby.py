@@ -8,12 +8,17 @@ from mouse import *
 def DrawImage2D(image, layer, x, y):
     shared.layers.append((image, layer, x - image.get_width() / 2 + 960, 540 - y - image.get_height() / 2))
 
+def DrawPolygon2D(points, color, surface):
+    newPoints = []
+    for x, y in points:
+        newPoints.append((x + surface.get_width() / 2, surface.get_height() / 2 - y))
+    pygame.draw.polygon(surface, color, newPoints)
+
 transition2 = 0
 
 class SongSection:
     def __init__(self):
         import pygame.freetype
-        import json
         self.x = -200
         self.onCursor = None
         self.titleFont = pygame.freetype.Font("font/Pretendard-SemiBold.ttf", 60)
@@ -95,7 +100,6 @@ class SongSection:
 class SelectionBox:
     scroll = 0
     pos = ((225, 450), (150, 300), (75, 150), (0, 0), (75, -150), (150, -300), (225, -450))
-
     def __init__(self, posIdx, songName): # posIdx 1부터 시작
         import pygame.freetype
         self.posIdx = posIdx
@@ -134,6 +138,12 @@ class SelectionBox:
         self.surface.set_alpha(self.alpha)
         DrawImage2D(self.surface, 0, self.x, self.y)
 
+class SettingsBox:
+    def __init__(self):
+        self.surface = images['UI']['SettingsBox']
+        self.on = False
+    def Update(self):
+        DrawImage2D(self.surface, 0, 0, 0)
 
 def Lobby():
     global transition2
@@ -146,6 +156,7 @@ def Lobby():
     SelectionBox.scroll = 0
     for i in range(5):
         selectionBoxes.append(SelectionBox(i + 1, shared.songList[(i + offset - 2) % len(shared.songList)]))
+    settingsBox = SettingsBox()
     songVol = 1
     songChanged = True
     songStartTime = 0
@@ -153,11 +164,14 @@ def Lobby():
     transition = time.perf_counter()
 
     while shared.scene == 'Lobby':
+        click = False
         shared.events = pygame.event.get()
         for event in shared.events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+            if transition2 == 0 and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                click = True
 
         wheelScroll = 0
         for event in shared.events:
@@ -212,8 +226,12 @@ def Lobby():
         rect = images['UI']['SettingsBtnOff'].get_rect(center = (870, 502.5))
         if rect.collidepoint(MousePos()):
             DrawImage2D(images['UI']['SettingsBtnOn'], 0, 870, 502.5)
+            if click:
+                settingsBox.on = True
         else:
             DrawImage2D(images['UI']['SettingsBtnOff'], 0, 870, 502.5)
+        if settingsBox.on:
+            settingsBox.Update()
 
         prevPressedKeys = pygame.key.get_pressed()
 

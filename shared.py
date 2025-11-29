@@ -13,9 +13,9 @@ layers = [] # (Surface, layeridx, x, y)
 
 events = []
 
-curSongIdx = 4
+curSongIdx = 0
 difficulty = 'Hard'
-songList = ['PPPP', 'IRIS OUT', '잔혹한 천사의 테제', 'Flower Rocket', '염라']
+songList = ['염라', '잔혹한 천사의 테제', 'PPPP', 'danser', 'Flower Rocket']
 songFiles = {
     'PPPP' : pygame.mixer.Sound('songs/PPPP.mp3'),
     'PPPP Preview' : pygame.mixer.Sound('songs/PPPP_Preview.mp3'),
@@ -27,6 +27,8 @@ songFiles = {
     'Flower Rocket Preview' : pygame.mixer.Sound('songs/Flower Rocket_Preview.mp3'),
     '염라' : pygame.mixer.Sound('songs/Karma.mp3'),
     '염라 Preview' : pygame.mixer.Sound('songs/Karma_Preview.mp3'),
+    'danser' : pygame.mixer.Sound('songs/danser.mp3'),
+    'danser Preview' : pygame.mixer.Sound('songs/danser_Preview.mp3'),
 }
 songInfo = {
     'PPPP' : {'Music by' : 'TAK', 'Level by' : '박동우'},
@@ -34,6 +36,7 @@ songInfo = {
     '잔혹한 천사의 테제' : {'Music by' : 'Yoko Takahashi', 'Level by' : '밀퀴셰이크'},
     'Flower Rocket' : {'Music by' : 'Plum', 'Level by' : '현이'},
     '염라' : {'Music by' : '달의하루', 'Level by' : 'CTPR'},
+    'danser' : {'Music by' : 'gladde paling', 'Level by' : 'Moz'},
 }
 songDifficulty = {
     'PPPP' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
@@ -41,6 +44,7 @@ songDifficulty = {
     '잔혹한 천사의 테제' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
     'Flower Rocket' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
     '염라' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
+    'danser' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
 }
 
 charts = {}
@@ -54,6 +58,7 @@ with open("charts/Flower_Normal.json", "r", encoding="utf-8") as f: charts['Flow
 with open("charts/Flower_Hard.json", "r", encoding="utf-8") as f: charts['Flower Rocket']['Hard'] = json.load(f)
 with open("charts/Karma_Easy.json", "r", encoding="utf-8") as f: charts['염라']['Easy'] = json.load(f)
 with open("charts/Karma_Hard.json", "r", encoding="utf-8") as f: charts['염라']['Hard'] = json.load(f)
+with open("charts/danser_Hard.json", "r", encoding="utf-8") as f: charts['danser']['Hard'] = json.load(f)
 
 sfxFiles = {
     'Hit' : pygame.mixer.Sound('sfx/Hit.mp3'),
