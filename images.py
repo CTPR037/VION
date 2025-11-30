@@ -23,11 +23,6 @@ images = {
         'SelectionBox' : pygame.image.load('images/PPPP_SelectionBox.png').convert_alpha(),
         'BGA' : 'bga/PPPP_BGA.mp4'
     },
-    'IRIS OUT' : {
-        'Album' : pygame.image.load('images/IRIS_Album.png').convert_alpha(),
-        'Background' : pygame.image.load('images/IRIS_Background.png').convert(),
-        'SelectionBox' : pygame.image.load('images/IRIS_SelectionBox.png').convert_alpha(),
-    },
     '잔혹한 천사의 테제' : {
         'Album' : pygame.image.load('images/Janhok_Album.png').convert_alpha(),
         'Background' : pygame.image.load('images/Janhok_Background.png').convert(),

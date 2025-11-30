@@ -16,23 +16,6 @@
             "perfect": 0
         }
     },
-    "IRIS OUT": {
-        "Easy": {
-            "highScore": 0,
-            "fullCombo": 0,
-            "perfect": 0
-        },
-        "Normal": {
-            "highScore": 0,
-            "fullCombo": 0,
-            "perfect": 0
-        },
-        "Hard": {
-            "highScore": 0,
-            "fullCombo": 0,
-            "perfect": 0
-        }
-    },
     "잔혹한 천사의 테제": {
         "Easy": {
             "highScore": 0,
@@ -40,7 +23,7 @@
             "perfect": 0
         },
         "Normal": {
-            "highScore": 931360,
+            "highScore": 954782,
             "fullCombo": 0,
             "perfect": 0
         },
@@ -57,7 +40,7 @@
             "perfect": 0
         },
         "Normal": {
-            "highScore": 902806,
+            "highScore": 922992,
             "fullCombo": 0,
             "perfect": 0
         },
@@ -74,8 +57,8 @@
             "perfect": 0
         },
         "Normal": {
-            "highScore": 0,
-            "fullCombo": 0,
+            "highScore": 989181,
+            "fullCombo": 1,
             "perfect": 0
         },
         "Hard": {
@@ -96,17 +79,17 @@
             "perfect": 0
         },
         "Hard": {
-            "highScore": 758777,
+            "highScore": 784806,
             "fullCombo": 0,
             "perfect": 0
         }
     },
     "Settings": {
-        "lobbyMusicVol": 1,
-        "lobbySfxVol": 1,
-        "ingameMusicVol": 1,
-        "ingameSfxVol": 0,
-        "offset": 0,
-        "noteSpeed": 0.8
+        "lobbyMusicVol": 0.45,
+        "lobbySfxVol": 0.49,
+        "ingameMusicVol": 0.51,
+        "ingameSfxVol": 0.53,
+        "offset": -0.117,
+        "noteSpeed": 1.0
     }
 }

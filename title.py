@@ -22,7 +22,7 @@ def Title():
             y += (10 - y) * 0.1
             textY += (-130 - textY) * 0.1
             font = pygame.freetype.Font("font/Pretendard-SemiBold.ttf", 30)
-            font = font.render('by CTPR', (255, 255, 255), None)[0]
+            font = font.render('by 1308김해찬', (255, 255, 255), None)[0]
             shared.layers.append((font, 0, 0 - font.get_width() / 2 + 960, 540 - textY - font.get_height() / 2))
         
         scale += (1 - scale) * 0.1

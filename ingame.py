@@ -26,8 +26,8 @@ def DrawImage(image, x, y, z, rot, scale):
     if scale == 1:
         scaled = image
     else:
-        scaled = pygame.transform.smoothscale(image, newSize)
-    if rot == 0:
+        scaled = pygame.transform.scale(image, newSize)
+    if rot == 0 and camera.rot == 0:
         rotated = scaled
     else:
         rotated = pygame.transform.rotate(scaled, -rot + camera.rot)
@@ -125,7 +125,7 @@ class Note:
         self.hit = 0
         self.missed = False
     def Update(self):
-        self.progress = (time.perf_counter() - self.startTime) / shared.settings.noteSpeed # 0~1
+        self.progress = (time.perf_counter() - self.startTime) / shared.settings['noteSpeed'] # 0~1
     
 class TapNote(Note):
     def __init__(self, key, startTime, offset):
@@ -172,7 +172,7 @@ class HoldNote(Note):
             time += 0.25
     def Update(self):
         super().Update()
-        self.endProgress = (time.perf_counter() - self.endTime) / shared.settings.noteSpeed
+        self.endProgress = (time.perf_counter() - self.endTime) / shared.settings['noteSpeed']
         if self.key == 'd':
             x = -150
         elif self.key == 'f':
@@ -403,11 +403,11 @@ def Ingame():
     offset = shared.charts[songName][shared.difficulty]["offset"]
     bga = MediaPlayer(images[songName]['BGA'], ff_opts={'an': True})
     bgaSurface = None
-    shared.songFiles[songName].set_volume(shared.settings.ingameMusicVol)
-    shared.sfxFiles['Hit'].set_volume(shared.settings.ingameSfxVol)
-    shared.sfxFiles['Flick'].set_volume(shared.settings.ingameSfxVol)
-    camera = Camera()
-    palyArea = PlayArea()
+    shared.songFiles[songName].set_volume(shared.settings['ingameMusicVol'])
+    shared.sfxFiles['Hit'].set_volume(shared.settings['ingameSfxVol'])
+    shared.sfxFiles['Flick'].set_volume(shared.settings['ingameSfxVol'])
+    # camera = Camera()
+    # playArea = PlayArea()
     scoreText = ScoreText()
     for note in notesData:
         if note['type'] == 'hold':
@@ -433,6 +433,9 @@ def Ingame():
     fade = pygame.Surface((shared.GAME_WIDTH, shared.GAME_HEIGHT), pygame.SRCALPHA)
     shared.screen = pygame.Surface((shared.GAME_WIDTH, shared.GAME_HEIGHT))
 
+    playArea.startLine = [0, 360, 1]
+    playArea.endLine = [0, -360, 1]
+
     while True: # intro
         shared.events = pygame.event.get()
         for event in shared.events:
@@ -457,10 +460,10 @@ def Ingame():
     gameNotes = []
     hitEffects = []
 
-    # playArea.startLine[1] = 800
-    # playArea.startLine[2] = 3
-    # playArea.endLine[1] = -300
-    # playArea.endLine[2] = 0.01
+    playArea.startLine[1] = 800
+    playArea.startLine[2] = 3
+    playArea.endLine[1] = -350
+    playArea.endLine[2] = 0.01
 
     frame = None
     dark = pygame.Surface((shared.GAME_WIDTH, shared.GAME_HEIGHT), pygame.SRCALPHA)
@@ -477,14 +480,13 @@ def Ingame():
             break
 
         timer = time.perf_counter() - startTime
-
         shared.screen.fill((0, 0, 0))
-        if timer >= shared.settings.noteSpeed: # BGA
+        if timer >= shared.settings['noteSpeed']: # BGA
             if frame is None:
                 frame, val = bga.get_frame()
             else:
                 img, t = frame
-                if t <= timer - shared.settings.noteSpeed:
+                if t <= timer - shared.settings['noteSpeed']:
                     data = img.to_bytearray()[0]
                     w, h = img.get_size()
                     bgaSurface = pygame.image.frombuffer(data, (w, h), "RGB")
@@ -494,20 +496,20 @@ def Ingame():
         DrawImage(dark, 0, 0, 1, 0, 1)
         playArea.Update()
 
-        if timer >= shared.settings.noteSpeed and not songPlay:
+        if timer >= shared.settings['noteSpeed'] and not songPlay:
             shared.songFiles[songName].play()
             songPlay = True
 
         while noteIdx < len(notesData): # spawn
             currentNoteData = notesData[noteIdx]
-            noteStartTime = currentNoteData['time'] * 60/bpm + offset + shared.settings.offset
+            noteStartTime = currentNoteData['time'] * 60/bpm + offset + shared.settings['offset']
             if timer >= noteStartTime:
                 if currentNoteData['type'] == 'tap':
-                    gameNotes.append(TapNote(currentNoteData['key'], currentNoteData['time'], startTime + offset + shared.settings.offset))
+                    gameNotes.append(TapNote(currentNoteData['key'], currentNoteData['time'], startTime + offset + shared.settings['offset']))
                 if currentNoteData['type'] == 'hold':
-                    gameNotes.append(HoldNote(currentNoteData['key'], currentNoteData['time'], currentNoteData['end'], startTime + offset + shared.settings.offset))
+                    gameNotes.append(HoldNote(currentNoteData['key'], currentNoteData['time'], currentNoteData['end'], startTime + offset + shared.settings['offset']))
                 if currentNoteData['type'] == 'flick':
-                    gameNotes.append(FlickNote(currentNoteData['key'], currentNoteData['time'], startTime + offset + shared.settings.offset))
+                    gameNotes.append(FlickNote(currentNoteData['key'], currentNoteData['time'], startTime + offset + shared.settings['offset']))
                 noteIdx += 1
             else:
                 break
@@ -519,17 +521,17 @@ def Ingame():
 
         for note in gameNotes: # update / miss
             note.Update()
-            if -GOOD_RANGE <= note.startTime + shared.settings.noteSpeed - time.perf_counter() <= MISS_RANGE:
-                hitableNotes[flickMap[note.key] if note.type == 'FlickNote' else note.key].append((note, note.startTime + shared.settings.noteSpeed - time.perf_counter()))
+            if -GOOD_RANGE <= note.startTime + shared.settings['noteSpeed'] - time.perf_counter() <= MISS_RANGE:
+                hitableNotes[flickMap[note.key] if note.type == 'FlickNote' else note.key].append((note, note.startTime + shared.settings['noteSpeed'] - time.perf_counter()))
             else:
-                if note.type != 'HoldNote' and note.startTime + shared.settings.noteSpeed - time.perf_counter() < -GOOD_RANGE and not note.missed:
+                if note.type != 'HoldNote' and note.startTime + shared.settings['noteSpeed'] - time.perf_counter() < -GOOD_RANGE and not note.missed:
                     # print('MISS')
                     scoreText.Show('MISS')
                     note.missed = True
-                elif note.type == 'HoldNote' and note.startTime + shared.settings.noteSpeed - time.perf_counter() < -GOOD_RANGE and not note.missed and not note.startHit:
+                elif note.type == 'HoldNote' and note.startTime + shared.settings['noteSpeed'] - time.perf_counter() < -GOOD_RANGE and not note.missed and not note.startHit:
                     scoreText.Show('MISS')
                     note.missed = True
-                elif note.type == 'HoldNote' and note.endTime + shared.settings.noteSpeed - time.perf_counter() < -GOOD_RANGE and not note.endMissed:
+                elif note.type == 'HoldNote' and note.endTime + shared.settings['noteSpeed'] - time.perf_counter() < -GOOD_RANGE and not note.endMissed:
                     # print('MISS')
                     scoreText.Show('MISS')
                     note.endMissed = True
@@ -575,7 +577,7 @@ def Ingame():
 
             if key in 'dfjk' and holdingNotes[key]:
                 if holdingNotes[key].hit < len(holdingNotes[key].holdCheckTime):
-                    if time.perf_counter() >= holdingNotes[key].holdCheckTime[holdingNotes[key].hit] + shared.settings.noteSpeed:
+                    if time.perf_counter() >= holdingNotes[key].holdCheckTime[holdingNotes[key].hit] + shared.settings['noteSpeed']:
                         holdingNotes[key].hit += 1
                         if pygame.key.get_pressed()[keyMap[key]]:
                             # print('PERFECT')
@@ -587,23 +589,35 @@ def Ingame():
                 else: # 홀드 떼는 판정
                     if not pygame.key.get_pressed()[keyMap[key]] and prevPressedKeys[keyMap[key]]:
                         holdingNotes[key].hit += 1
-                        if abs(holdingNotes[key].endTime + shared.settings.noteSpeed - time.perf_counter()) <= PERFECT_RANGE:
+                        if abs(holdingNotes[key].endTime + shared.settings['noteSpeed'] - time.perf_counter()) <= PERFECT_RANGE:
                             # print('PERFECT')
                             scoreText.Show('PERFECT')
-                        elif abs(holdingNotes[key].endTime + shared.settings.noteSpeed - time.perf_counter()) <= GREAT_RANGE:
-                            # print('GREAT', 'fast' if holdingNotes[key].endTime + shared.settings.noteSpeed - time.perf_counter() > 0 else 'slow')
-                            scoreText.Show('GREAT', 'fast' if holdingNotes[key].endTime + shared.settings.noteSpeed - time.perf_counter() > 0 else 'slow')
+                        elif abs(holdingNotes[key].endTime + shared.settings['noteSpeed'] - time.perf_counter()) <= GREAT_RANGE:
+                            scoreText.Show('GREAT', 'fast' if holdingNotes[key].endTime + shared.settings['noteSpeed'] - time.perf_counter() > 0 else 'slow')
                         else:
-                            # print('GOOD', 'fast' if holdingNotes[key].endTime + shared.settings.noteSpeed - time.perf_counter() > 0 else 'slow')
-                            scoreText.Show('GOOD', 'fast' if holdingNotes[key].endTime + shared.settings.noteSpeed - time.perf_counter() > 0 else 'slow')
+                            scoreText.Show('GOOD', 'fast' if holdingNotes[key].endTime + shared.settings['noteSpeed'] - time.perf_counter() > 0 else 'slow')
                         hitEffects.append(HitEffect(key, 'HoldNote'))
                         shared.sfxFiles['Hit'].play()
                         holdingNotes[key] = None
 
         prevPressedKeys = pygame.key.get_pressed()
-        gameNotes = [note for note in gameNotes 
-                     if note.type != 'HoldNote' and note.progress <= 1.33 and note.hit == False and not (note.missed and note.progress < 1)
-                     or note.type == 'HoldNote' and note.endProgress <= 1.33 and note.hit <= len(note.holdCheckTime)]
+        temp = []
+        for note in gameNotes:
+            if note.type != 'HoldNote':
+                if note.progress <= 1.33 and note.hit == False and not (note.missed and note.progress < 1):
+                    temp.append(note)
+                elif note.progress > 1.33:
+                    scoreText.Show('MISS')
+            elif note.type == 'HoldNote':
+                if note.endProgress <= 1.33 and note.hit <= len(note.holdCheckTime):
+                    temp.append(note)
+                elif note.endProgress > 1.33:
+                    scoreText.Show('MISS', hold = True)
+
+        gameNotes = temp.copy()
+        # gameNotes = [note for note in gameNotes 
+        #              if note.type != 'HoldNote' and note.progress <= 1.33 and note.hit == False and not (note.missed and note.progress < 1)
+        #              or note.type == 'HoldNote' and note.endProgress <= 1.33 and note.hit <= len(note.holdCheckTime)]
         for eff in hitEffects:
             eff.Update()
         hitEffects = [e for e in hitEffects
@@ -616,7 +630,7 @@ def Ingame():
             endTime = time.perf_counter()
         if endTime != 0 and 1 <= time.perf_counter() - endTime < 2:
             fade.fill((255, 255, 255, 255 * (time.perf_counter() - endTime - 1)))
-            shared.songFiles[songName].set_volume(shared.settings.ingameMusicVol * (1 - 1 * (time.perf_counter() - endTime - 1)))
+            shared.songFiles[songName].set_volume(shared.settings['ingameMusicVol'] * (1 - 1 * (time.perf_counter() - endTime - 1)))
         elif endTime != 0 and time.perf_counter() - endTime >= 2:
             shared.songFiles[songName].stop()
             break

@@ -19,8 +19,6 @@ songList = ['염라', '잔혹한 천사의 테제', 'PPPP', 'danser', 'Flower Ro
 songFiles = {
     'PPPP' : pygame.mixer.Sound('songs/PPPP.mp3'),
     'PPPP Preview' : pygame.mixer.Sound('songs/PPPP_Preview.mp3'),
-    'IRIS OUT' : pygame.mixer.Sound('songs/IRIS OUT.mp3'),
-    'IRIS OUT Preview' : pygame.mixer.Sound('songs/IRIS OUT_Preview.mp3'),
     '잔혹한 천사의 테제' : pygame.mixer.Sound('songs/Janhok.mp3'),
     '잔혹한 천사의 테제 Preview' : pygame.mixer.Sound('songs/Janhok_Preview.mp3'),
     'Flower Rocket' : pygame.mixer.Sound('songs/Flower Rocket.mp3'),
@@ -32,19 +30,17 @@ songFiles = {
 }
 songInfo = {
     'PPPP' : {'Music by' : 'TAK', 'Level by' : 'HeartbeatUdon'},
-    'IRIS OUT' : {'Music by' : 'Kenshi Yonezu', 'Level by' : 'Moz'},
     '잔혹한 천사의 테제' : {'Music by' : 'Yoko Takahashi', 'Level by' : 'MilQShake'},
-    'Flower Rocket' : {'Music by' : 'Plum', 'Level by' : '광명북중학교 3학년 박지현'},
+    'Flower Rocket' : {'Music by' : 'Plum', 'Level by' : '도르돌'},
     '염라' : {'Music by' : '달의하루', 'Level by' : 'CTPR'},
     'danser' : {'Music by' : 'gladde paling', 'Level by' : 'Moz'},
 }
 songDifficulty = {
-    'PPPP' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
-    'IRIS OUT' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
-    '잔혹한 천사의 테제' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
-    'Flower Rocket' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
+    'PPPP' : {'Easy' : 0, 'Normal' : 0, 'Hard' : 19},
+    '잔혹한 천사의 테제' : {'Easy' : 0, 'Normal' : 11, 'Hard' : 17},
+    'Flower Rocket' : {'Easy' : 5, 'Normal' : 12, 'Hard' : 99},
     '염라' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
-    'danser' : {'Easy' : 5, 'Normal' : 10, 'Hard' : 15},
+    'danser' : {'Easy' : 0, 'Normal' : 0, 'Hard' : 30},
 }
 
 charts = {}
@@ -57,6 +53,7 @@ with open("charts/Flower_Easy.json", "r", encoding="utf-8") as f: charts['Flower
 with open("charts/Flower_Normal.json", "r", encoding="utf-8") as f: charts['Flower Rocket']['Normal'] = json.load(f)
 with open("charts/Flower_Hard.json", "r", encoding="utf-8") as f: charts['Flower Rocket']['Hard'] = json.load(f)
 with open("charts/Karma_Easy.json", "r", encoding="utf-8") as f: charts['염라']['Easy'] = json.load(f)
+with open("charts/Karma_Normal.json", "r", encoding="utf-8") as f: charts['염라']['Normal'] = json.load(f)
 with open("charts/Karma_Hard.json", "r", encoding="utf-8") as f: charts['염라']['Hard'] = json.load(f)
 with open("charts/danser_Hard.json", "r", encoding="utf-8") as f: charts['danser']['Hard'] = json.load(f)
 
@@ -76,4 +73,4 @@ class Settings:
 
 with open("userData.json", "r", encoding="utf-8") as f:
     userData = json.load(f)
-settings = Settings(userData['Settings'])
+settings = userData['Settings']

@@ -1,6 +1,6 @@
 import subprocess, sys
-subprocess.check_call([sys.executable, "-m", "pip", "install", "pygame"])
-subprocess.check_call([sys.executable, "-m", "pip", "install", "ffpyplayer"])
+# subprocess.check_call([sys.executable, "-m", "pip", "install", "pygame"])
+# subprocess.check_call([sys.executable, "-m", "pip", "install", "ffpyplayer"])
 import pygame
 pygame.init()
 pygame.key.stop_text_input()
@@ -11,7 +11,7 @@ shared.screen = pygame.Surface((shared.BASE_WIDTH, shared.BASE_HEIGHT))
 shared.gameScreen = pygame.Surface((shared.GAME_WIDTH, shared.GAME_HEIGHT))
 info = pygame.display.Info()
 shared.letterbox = pygame.display.set_mode((info.current_w, info.current_h))
-pygame.mixer.init(buffer=256)
+pygame.mixer.init()
 pygame.mixer.set_num_channels(10)
 
 
