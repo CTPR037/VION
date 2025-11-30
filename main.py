@@ -1,6 +1,6 @@
 import subprocess, sys
-# subprocess.check_call([sys.executable, "-m", "pip", "install", "pygame"])
-# subprocess.check_call([sys.executable, "-m", "pip", "install", "ffpyplayer"])
+subprocess.check_call([sys.executable, "-m", "pip", "install", "pygame"])
+subprocess.check_call([sys.executable, "-m", "pip", "install", "ffpyplayer"])
 import pygame
 pygame.init()
 pygame.key.stop_text_input()
