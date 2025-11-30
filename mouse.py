@@ -11,6 +11,6 @@ def MousePos():
     else: # 상하 레터박스
         yOffset = (shared.letterbox.get_size()[1] - shared.screen.get_size()[1] * scaleRate) / 2
     mousePos = pygame.mouse.get_pos()
-    mousePos = (mousePos[0] / scaleRate + xOffset - 960, 540 - (mousePos[1] / scaleRate + yOffset))
+    mousePos = ((mousePos[0] - xOffset) / scaleRate - 960, 540 - (mousePos[1] - yOffset) / scaleRate)
     # print(mousePos)
     return mousePos

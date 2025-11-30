@@ -29,8 +29,8 @@ songFiles = {
     'danser Preview' : pygame.mixer.Sound('songs/danser_Preview.mp3'),
 }
 songInfo = {
-    'PPPP' : {'Music by' : 'TAK', 'Level by' : 'HeartbeatUdon'},
-    '잔혹한 천사의 테제' : {'Music by' : 'Yoko Takahashi', 'Level by' : 'MilQShake'},
+    'PPPP' : {'Music by' : 'TAK', 'Level by' : '박우동'},
+    '잔혹한 천사의 테제' : {'Music by' : 'Yoko Takahashi', 'Level by' : '밀퀴셰이크'},
     'Flower Rocket' : {'Music by' : 'Plum', 'Level by' : '도르돌'},
     '염라' : {'Music by' : '달의하루', 'Level by' : 'CTPR'},
     'danser' : {'Music by' : 'gladde paling', 'Level by' : 'Moz'},

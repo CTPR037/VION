@@ -16,6 +16,7 @@ images = {
         'BadgeFullCombo' : pygame.image.load('images/BadgeFullCombo.png').convert_alpha(),
         'BadgePerfect' : pygame.image.load('images/BadgePerfect.png').convert_alpha(),
         'SettingsBox' : pygame.image.load('images/SettingsBox.png').convert_alpha(),
+        'Tutorial' : pygame.image.load('images/Tutorial.png').convert_alpha(),
     },
     'PPPP' : {
         'Album' : pygame.image.load('images/PPPP_Album.png').convert_alpha(),
@@ -60,23 +61,23 @@ colors = {
     '잔혹한 천사의 테제' : {
         'PlayArea' : (100, 100, 100, 127),
         'CheckLine' : (200, 200, 200),
-        'TapNote' : (180, 240, 255),
-        'HoldNote' : (180, 240, 255, 127),
-        'FlickNote' : (255, 240, 180),
+        'TapNote' : (200, 150, 255),
+        'HoldNote' : (200, 150, 255, 127),
+        'FlickNote' : (150, 255, 150),
     },
     'Flower Rocket' : {
         'PlayArea' : (100, 100, 100, 127),
         'CheckLine' : (200, 200, 200),
-        'TapNote' : (180, 240, 255),
-        'HoldNote' : (180, 240, 255, 127),
-        'FlickNote' : (255, 240, 180),
+        'TapNote' : (255, 240, 180),
+        'HoldNote' : (255, 240, 180, 127),
+        'FlickNote' : (180, 240, 255),
     },
     'PPPP' : {
         'PlayArea' : (100, 100, 100, 127),
         'CheckLine' : (200, 200, 200),
         'TapNote' : (180, 240, 255),
         'HoldNote' : (180, 240, 255, 127),
-        'FlickNote' : (255, 240, 180),
+        'FlickNote' : (255, 200, 180),
     },
     'danser' : {
         'PlayArea' : (100, 100, 100, 127),

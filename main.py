@@ -22,7 +22,19 @@ from screenScaling import *
 shared.scene = 'Title'
 shared.screen.fill((0, 0, 0))
 
-# time.sleep(1)
+while shared.userData['First']:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print('click')
+            shared.userData['First'] = 0
+            with open('userdata.json', 'w', encoding='utf-8') as f:
+                json.dump(shared.userData, f, ensure_ascii=False, indent=4)
+    shared.layers.append((images['UI']['Tutorial'], 0, 0, 0))
+    Update()
+
 while True:
     if shared.scene == 'Title':
         Title()
