@@ -12,7 +12,7 @@ shared.gameScreen = pygame.Surface((shared.GAME_WIDTH, shared.GAME_HEIGHT))
 info = pygame.display.Info()
 shared.letterbox = pygame.display.set_mode((info.current_w, info.current_h))
 pygame.mixer.init()
-pygame.mixer.set_num_channels(10)
+pygame.mixer.set_num_channels(32)
 
 
 from images import *

@@ -11,7 +11,7 @@
             "perfect": 0
         },
         "Hard": {
-            "highScore": 949620,
+            "highScore": 0,
             "fullCombo": 0,
             "perfect": 0
         }
@@ -23,47 +23,47 @@
             "perfect": 0
         },
         "Normal": {
-            "highScore": 954782,
+            "highScore": 0,
             "fullCombo": 0,
             "perfect": 0
         },
         "Hard": {
-            "highScore": 959219,
+            "highScore": 0,
             "fullCombo": 0,
             "perfect": 0
         }
     },
     "Flower Rocket": {
         "Easy": {
-            "highScore": 954308,
+            "highScore": 0,
             "fullCombo": 0,
             "perfect": 0
         },
         "Normal": {
-            "highScore": 922992,
+            "highScore": 0,
             "fullCombo": 0,
             "perfect": 0
         },
         "Hard": {
-            "highScore": 615400,
+            "highScore": 0,
             "fullCombo": 0,
             "perfect": 0
         }
     },
     "염라": {
         "Easy": {
-            "highScore": 995444,
-            "fullCombo": 1,
+            "highScore": 0,
+            "fullCombo": 0,
             "perfect": 0
         },
         "Normal": {
-            "highScore": 989181,
-            "fullCombo": 1,
+            "highScore": 0,
+            "fullCombo": 0,
             "perfect": 0
         },
         "Hard": {
-            "highScore": 982296,
-            "fullCombo": 1,
+            "highScore": 0,
+            "fullCombo": 0,
             "perfect": 0
         }
     },
@@ -79,17 +79,17 @@
             "perfect": 0
         },
         "Hard": {
-            "highScore": 784806,
+            "highScore": 0,
             "fullCombo": 0,
             "perfect": 0
         }
     },
     "Settings": {
-        "lobbyMusicVol": 0.45,
-        "lobbySfxVol": 0.49,
-        "ingameMusicVol": 0.51,
-        "ingameSfxVol": 0.53,
-        "offset": -0.117,
+        "lobbyMusicVol": 1,
+        "lobbySfxVol": 1,
+        "ingameMusicVol": 1,
+        "ingameSfxVol": 1,
+        "offset": 0.0,
         "noteSpeed": 1.0
     }
 }

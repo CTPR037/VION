@@ -14,7 +14,7 @@ layers = [] # (Surface, layeridx, x, y)
 events = []
 
 curSongIdx = 0
-difficulty = 'Hard'
+difficulty = 'Easy'
 songList = ['염라', '잔혹한 천사의 테제', 'PPPP', 'danser', 'Flower Rocket']
 songFiles = {
     'PPPP' : pygame.mixer.Sound('songs/PPPP.mp3'),
@@ -60,6 +60,9 @@ with open("charts/danser_Hard.json", "r", encoding="utf-8") as f: charts['danser
 sfxFiles = {
     'Hit' : pygame.mixer.Sound('sfx/Hit.mp3'),
     'Flick' : pygame.mixer.Sound('sfx/Flick.mp3'),
+    'Scroll' : pygame.mixer.Sound('sfx/Scroll.mp3'),
+    'Start' : pygame.mixer.Sound('sfx/Start.mp3'),
+    'Button' : pygame.mixer.Sound('sfx/Button.mp3'),
 }
 
 class Settings:

@@ -18,24 +18,28 @@ class Camera:
 camera = Camera()
 
 def DrawImage(image, x, y, z, rot, scale):
-    if z - camera.z <= 0:
-        return
-
-    scale *= 1 / (z - camera.z)
-    newSize = (int(image.get_width() * scale), int(image.get_height() * scale))
-    if scale == 1:
-        scaled = image
-    else:
-        scaled = pygame.transform.scale(image, newSize)
-    if rot == 0 and camera.rot == 0:
-        rotated = scaled
-    else:
-        rotated = pygame.transform.rotate(scaled, -rot + camera.rot)
-
-    newX = ((x - camera.x) * math.cos(math.radians(camera.rot)) - (y - camera.y) * math.sin(math.radians(camera.rot))) / (z - camera.z)
-    newY = ((x - camera.x) * math.sin(math.radians(camera.rot)) + (y - camera.y) * math.cos(math.radians(camera.rot))) / (z - camera.z)
+    newX = x - camera.x
+    newY = y - camera.y
+    shared.layers.append((image, 1, newX - image.get_width() / 2 + shared.screen.get_size()[0] / 2, shared.screen.get_size()[1] / 2 - newY - image.get_height() / 2))
     
-    shared.layers.append((rotated, z, newX - rotated.get_width() / 2 + shared.screen.get_size()[0] / 2, shared.screen.get_size()[1] / 2 - newY - rotated.get_height() / 2))
+    # if z - camera.z <= 0:
+    #     return
+
+    # scale *= 1 / (z - camera.z)
+    # newSize = (int(image.get_width() * scale), int(image.get_height() * scale))
+    # if scale == 1:
+    #     scaled = image
+    # else:
+    #     scaled = pygame.transform.scale(image, newSize)
+    # if rot == 0 and camera.rot == 0:
+    #     rotated = scaled
+    # else:
+    #     rotated = pygame.transform.rotate(scaled, -rot + camera.rot)
+
+    # newX = ((x - camera.x) * math.cos(math.radians(camera.rot)) - (y - camera.y) * math.sin(math.radians(camera.rot))) / (z - camera.z)
+    # newY = ((x - camera.x) * math.sin(math.radians(camera.rot)) + (y - camera.y) * math.cos(math.radians(camera.rot))) / (z - camera.z)
+    
+    # shared.layers.append((rotated, z, newX - rotated.get_width() / 2 + shared.screen.get_size()[0] / 2, shared.screen.get_size()[1] / 2 - newY - rotated.get_height() / 2))
     
 def DrawPolygon(points, color, surface): # points -> (x,y,z)
     newPoints = []
@@ -395,6 +399,50 @@ class ScoreText:
             self.combo = 0
 scoreText = ScoreText()
 
+def Gimmick(startTime):
+    if shared.songList[shared.curSongIdx] == '염라':
+        incline = [(60, 100)]
+    if shared.songList[shared.curSongIdx] == '잔혹한 천사의 테제':
+        incline = [(69, 91)]
+    if shared.songList[shared.curSongIdx] == 'PPPP':
+        incline = [(44.5, 60.5)]
+    if shared.songList[shared.curSongIdx] == 'Flower Rocket':
+        incline = [(25.5, 42), (75.5, 92), (134.5, 153), (172, 186)]
+    if shared.songList[shared.curSongIdx] == 'danser':
+        incline = [(32, 53), (61, 74)]
+    for i in incline:
+        s, e = i
+        if s <= time.perf_counter() - startTime < s + 0.5:
+                playArea.startLine[1] = 360 + 220 * EaseIn(startTime + s, 0.5)
+                playArea.startLine[2] = 1 + 1 * EaseIn(startTime + s, 0.5)
+                playArea.endLine[1] = -360 + 5 * EaseIn(startTime + s, 0.5)
+                playArea.endLine[2] = 1 - 0.49 * EaseIn(startTime + s, 0.5)
+        if s + 0.5 <= time.perf_counter() - startTime < s + 1:
+                playArea.startLine[1] = 580 + 220 * EaseOut(startTime + s + 0.5, 0.5)
+                playArea.startLine[2] = 2 + 1 * EaseOut(startTime + s + 0.5, 0.5)
+                playArea.endLine[1] = -355 + 5 * EaseOut(startTime + s + 0.5, 0.5)
+                playArea.endLine[2] = 0.51 - 0.5 * EaseOut(startTime + s + 0.5, 0.5)
+        if s + 1 <= time.perf_counter() - startTime < s + 2:
+            playArea.startLine[1] = 800
+            playArea.startLine[2] = 3
+            playArea.endLine[1] = -350
+            playArea.endLine[2] = 0.01
+        if e <= time.perf_counter() - startTime < e + 0.5:
+                playArea.startLine[1] = 800 - 220 * EaseIn(startTime + e, 0.5)
+                playArea.startLine[2] = 3 - 1 * EaseIn(startTime + e, 0.5)
+                playArea.endLine[1] = -350 - 5 * EaseIn(startTime + e, 0.5)
+                playArea.endLine[2] = 0.01 + 0.49 * EaseIn(startTime + e, 0.5)
+        if e + 0.5 <= time.perf_counter() - startTime < e + 1:
+                playArea.startLine[1] = 580 - 220 * EaseOut(startTime + e + 0.5, 0.5)
+                playArea.startLine[2] = 2 - 1 * EaseOut(startTime + e + 0.5, 0.5)
+                playArea.endLine[1] = -355 - 5 * EaseOut(startTime + e + 0.5, 0.5)
+                playArea.endLine[2] = 0.5 + 0.5 * EaseOut(startTime + e + 0.5, 0.5)
+        if e + 1 <= time.perf_counter() - startTime < e + 2:
+            playArea.startLine[1] = 360
+            playArea.startLine[2] = 1
+            playArea.endLine[1] = -360
+            playArea.endLine[2] = 1
+
 def Ingame():
     import pygame.freetype
     songName = shared.songList[shared.curSongIdx]
@@ -460,10 +508,10 @@ def Ingame():
     gameNotes = []
     hitEffects = []
 
-    playArea.startLine[1] = 800
-    playArea.startLine[2] = 3
-    playArea.endLine[1] = -350
-    playArea.endLine[2] = 0.01
+    # playArea.startLine[1] = 800
+    # playArea.startLine[2] = 3
+    # playArea.endLine[1] = -350
+    # playArea.endLine[2] = 0.01
 
     frame = None
     dark = pygame.Surface((shared.GAME_WIDTH, shared.GAME_HEIGHT), pygame.SRCALPHA)
@@ -478,6 +526,8 @@ def Ingame():
                 exitGame = True
         if exitGame:
             break
+
+        Gimmick(startTime)
 
         timer = time.perf_counter() - startTime
         shared.screen.fill((0, 0, 0))
@@ -636,8 +686,8 @@ def Ingame():
             break
         DrawImage(fade, 0, 0, 1, 0, 1)
 
-        font = pygame.freetype.Font("font/Pretendard-Medium.ttf", 20).render(f'{clock.get_fps():.1f}', (255, 255, 255), None)[0]
-        DrawImage(font, -300, 200, 1, 0, 1)
+        # font = pygame.freetype.Font("font/Pretendard-Medium.ttf", 20).render(f'{time.perf_counter() - startTime:.1f}', (255, 255, 255), None)[0]
+        # DrawImage(font, -300, 200, 1, 0, 1)
         Update()
 
     transition = time.perf_counter()

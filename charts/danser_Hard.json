@@ -1,6 +1,6 @@
 {
   "bpm": 180,
-  "offset": 0.35,
+  "offset": 0.32,
   "notes": [
     {"time":0,"key":"d","type":"tap"},
     {"time":0,"key":"f","type":"tap"},

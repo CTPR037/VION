@@ -58,6 +58,8 @@ class SongSection:
             DrawImage2D(images['UI']['PlayBtnOn'], 0, -710 + self.x, 20)
             if click and shared.songDifficulty[songName][shared.difficulty] != 0:
                 transition2 = time.perf_counter()
+                shared.sfxFiles['Start'].set_volume(shared.settings['lobbySfxVol'])
+                shared.sfxFiles['Start'].play()
         else:
             DrawImage2D(images['UI']['PlayBtnOff'], 0, -710 + self.x, 20)
         
@@ -66,16 +68,22 @@ class SongSection:
             self.onCursor = 'EasyBtn'
             if click:
                 shared.difficulty = 'Easy'
+                shared.sfxFiles['Button'].set_volume(shared.settings['lobbySfxVol'])
+                shared.sfxFiles['Button'].play()
         rect = images['UI']['DifficultyBtnOff'].get_rect(center = (-427.5 + self.x, -327)).inflate(-45,0)
         if rect.collidepoint(mousePos):
             self.onCursor = 'NormalBtn'
             if click:
                 shared.difficulty = 'Normal'
+                shared.sfxFiles['Button'].set_volume(shared.settings['lobbySfxVol'])
+                shared.sfxFiles['Button'].play()
         rect = images['UI']['DifficultyBtnOff'].get_rect(center = (-247.5 + self.x, -327)).inflate(-45,0)
         if rect.collidepoint(mousePos):
             self.onCursor = 'HardBtn'
             if click:
                 shared.difficulty = 'Hard'
+                shared.sfxFiles['Button'].set_volume(shared.settings['lobbySfxVol'])
+                shared.sfxFiles['Button'].play()
         
         if self.onCursor == 'EasyBtn' or shared.difficulty == 'Easy':
             DrawImage2D(images['UI']['DifficultyBtnOn'], 0, -607.5 + self.x, -327)
@@ -249,7 +257,7 @@ def Lobby():
         click = False
         shared.events = pygame.event.get()
         for event in shared.events:
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 exit()
             if transition2 == 0 and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -278,6 +286,8 @@ def Lobby():
         
         if songChanged:
             shared.songFiles[songName + ' Preview'].stop()
+            shared.sfxFiles['Scroll'].set_volume(shared.settings['lobbySfxVol'])
+            shared.sfxFiles['Scroll'].play()
         
         songName = shared.songList[shared.curSongIdx]
         DrawImage2D(images[songName]['Background'], 10, 0, 0)
@@ -313,6 +323,8 @@ def Lobby():
             DrawImage2D(images['UI']['SettingsBtnOn'], 0, 870, 502.5)
             if click:
                 settingsBox.on = True
+                shared.sfxFiles['Button'].set_volume(shared.settings['lobbySfxVol'])
+                shared.sfxFiles['Button'].play()
         else:
             DrawImage2D(images['UI']['SettingsBtnOff'], 0, 870, 502.5)
         if settingsBox.on:
